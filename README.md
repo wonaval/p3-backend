@@ -1,10 +1,9 @@
-<<<<<<< HEAD
 # PROJECT TITLE: TBA
 
 ---
 
 ### NOTE
-<p>Please visit full README at <https://github.com/wonaval/p3-frontend></p>
+<p>Please visit full README at https://github.com/wonaval/p3-frontend</p>
 
 ---
 
