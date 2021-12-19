@@ -29,13 +29,20 @@ configController.update = async (req, res) => {
     // Retrieve user and update location settings
     // Password is not require as with the other functions since this will be more of a refresh of geolocation
     const user = await models.user.findOne({where: {id: req.headers.authorization}})
-    const config = await models.config.findOne({where: {userId: user.id}})
-    const updateConfig = await config.update({
-      longitude: req.body.longitude,
-      latitude: req.body.latitude
-    })
-    res.json({message: 'Settings update succeeded', config: updateConfig})
-  } catch (error) {
+    if (user.location) {
+      await user.update({location: false})
+      const config = await models.config.findOne({where: {userId: user.id}})
+      const updateConfig = await config.update({
+      longitude: null,
+      latitude: null})}
+    else {
+      await user.update({location: true})
+      const config = await models.config.findOne({where: {userId: user.id}})
+      const updateConfig = await config.update({
+        longitude: req.body.longitude,
+        latitude: req.body.latitude})}
+    res.json({message: 'Settings update succeeded'})}
+  catch (error) {
     console.log('Error:', error.message)
     res.status(400).json(error)
   }

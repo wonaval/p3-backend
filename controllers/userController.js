@@ -32,8 +32,8 @@ userController.create = async (req, res) => {
         longitude: null,
         latitude: null,
         userId: createUser.id})}
-    // Remove password from response json
-    const user = await models.user.findOne({where: {id: createUser.id}, attributes: {exclude: 'password'}})
+        // Remove password from response json
+        const user = await models.user.findOne({where: {id: createUser.id}, attributes: {exclude: 'password'}})
     // Export userInfo to be set into user useContext
     res.json({message: 'Signup succeeded', user: user})
   } catch (error) {
@@ -61,8 +61,8 @@ userController.login = async (req, res) => {
 // Verify user - GET - /user - Tested OK
 userController.verify = async (req, res) => {
   try {
-    // Retrieve user
-    const user = await models.user.findOne({where: {id: req.headers.authorization}})
+    // Remove password from response json
+    const user = await models.user.findOne({where: {id: req.headers.authorization}, attributes: {exclude: 'password'}})
     if (user) {res.json({message: 'Verification succeeded', user: user})}
     else {res.status(404).json({message: 'Verification failed'})}
   } catch (error) {
@@ -83,7 +83,7 @@ userController.update = async (req, res) => {
         last: req.body.last,
         email: req.body.email,
         password: req.body.newPassword,
-        allowLocation: req.body.location
+        location: req.body.location
       })
       res.json({message: 'Update succeeded'})}
     else {res.status(400).json({message: 'Update failed'})}

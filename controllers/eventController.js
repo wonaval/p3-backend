@@ -10,7 +10,7 @@ const eventController = {}
 // RES - Response received after request is processed
 
 // Function description - ROUTE - Path - Route tested?
-// Create event - POST - /event - ???
+// Create event - POST - /event - Tested OK
 eventController.create = async (req, res) => {
   try {
     const user = await models.user.findOne({where: {id: req.headers.authorization}})
@@ -27,11 +27,11 @@ eventController.create = async (req, res) => {
   }
 }
 
-// Get event list - GET - /event - ???
+// Get event list - GET - /event - Tested OK
 eventController.retrieve = async (req, res) => {
   try {
     const user = await models.user.findOne({where: {id: req.headers.authorization}})
-    const eventList = await models.config.findAll({where: {userId: user.id}})
+    const eventList = await models.event.findAll({where: {userId: user.id}})
     res.json({message: 'Event List retrieval succeeded', event: eventList})
   } catch (error) {
     console.log('Error:', error.message)
@@ -39,7 +39,7 @@ eventController.retrieve = async (req, res) => {
   }
 }
 
-// Delete event - DELETE - /event/:id- ???
+// Delete event - DELETE - /event/:id- Tested OK
 eventController.delete = async (req, res) => {
   try {
     const user = await models.user.findOne({where: {id: req.headers.authorization}})
@@ -53,7 +53,6 @@ eventController.delete = async (req, res) => {
     res.status(400).json(error)
   }
 }
-
 
 // Export controller to be able to import elsewhere
 module.exports = eventController
