@@ -26,6 +26,7 @@ const eventRoutes = require('./routes/eventRoute')
 app.use('/user', userRoutes)
 app.use('/config', configRoutes)
 app.use('/event', eventRoutes)
+app.use(express.static(__dirname + '/public'))
 
 // Starts server with either port in env or 3001 and start route logger
 const PORT = process.env.PORT || 3001
