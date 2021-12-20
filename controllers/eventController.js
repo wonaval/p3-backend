@@ -17,7 +17,7 @@ eventController.create = async (req, res) => {
     const createEvent = await models.event.create({
       title: req.body.title,
       location: req.body.location,
-      datetime: req.body.datetime,
+      date: req.body.date,
       description: req.body.description,
       userId: user.id})
     res.json({message: 'Event creation succeeded', event: createEvent})
@@ -32,6 +32,7 @@ eventController.retrieve = async (req, res) => {
   try {
     const user = await models.user.findOne({where: {id: req.headers.authorization}})
     const eventList = await models.event.findAll({where: {userId: user.id}})
+    console.log(eventList)
     res.json({message: 'Event List retrieval succeeded', event: eventList})
   } catch (error) {
     console.log('Error:', error.message)

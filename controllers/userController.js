@@ -82,10 +82,13 @@ userController.update = async (req, res) => {
         first: req.body.first,
         last: req.body.last,
         email: req.body.email,
-        password: req.body.newPassword,
         location: req.body.location
       })
-      res.json({message: 'Update succeeded'})}
+      if (req.body.newPassword !== '') {
+        await user.update({
+          password: req.body.newPassword
+      })}
+      res.json({message: 'Update succeeded', user: user})}
     else {res.status(400).json({message: 'Update failed'})}
   } catch (error) {
     console.log('Error:', error.message)
@@ -100,7 +103,6 @@ userController.delete = async (req, res) => {
     const user = await models.user.findOne({where: {id: req.headers.authorization}})
     // Deleting account will require entering their current password
     if (user && user.password === req.body.password) {
-      console.log('Checked')
       // Delete events
       await models.event.destroy({where: {userId: user.id}})
       // Delete settings

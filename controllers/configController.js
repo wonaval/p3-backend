@@ -56,7 +56,6 @@ configController.delete = async (req, res) => {
     const user = await models.user.findOne({where: {id: req.headers.authorization}})
     user.location = false;
     await user.save();
-    console.log(user)
     if (user) {
     const config = await models.config.findOne({where: {userId: user.id}})
     const deleteConfig = await config.update({
